@@ -8,7 +8,7 @@ import com.danilafe.ktstarbound.readers.GenericReader
  * in a platform independent way. Things like ByteBuffers are
  * too Java-specific to work here.
  */
-public abstract class GenericExtractor(public var reader: GenericReader) {
+public abstract class GenericExtractor<T : GenericReader>(public var reader: T) {
 
     /**
      * Reads a byte of data from the reader.

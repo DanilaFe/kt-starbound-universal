@@ -4,7 +4,7 @@ import com.danilafe.ktstarbound.extractor.GenericExtractor
 import com.danilafe.ktstarbound.readers.GenericReader
 import java.nio.ByteBuffer
 
-public class JvmExtractor(reader: GenericReader) : GenericExtractor(reader){
+public class JvmExtractor<T : GenericReader>(reader: T) : GenericExtractor<T>(reader){
 
     override fun readByte(): Byte? {
         var bytes = reader.read(1)?: return null
