@@ -47,8 +47,8 @@ public class JvmExtractor<T : GenericReader>(reader: T) : GenericExtractor<T>(re
         do {
             currentLong = currentLong shl 7
             byte = readByte() ?: return null
-            currentLong = currentLong or (byte.toLong() and 0x1111111)
-        } while((byte.toInt() and 0x10000000) != 0)
+            currentLong = currentLong or (byte.toLong() and 0b1111111)
+        } while((byte.toInt() and 0b10000000) != 0)
         return currentLong
     }
 

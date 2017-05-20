@@ -36,9 +36,10 @@ public abstract class GenericLeafReader
     public abstract fun advanceRaw(length: Long)
 
     override fun read(length: Int): ByteArray? {
+        blockIndex = ((index() - headerSize) / blockSize).toInt()
         var remainingData = length
         val data = ByteArray(length)
-        val index = 0
+        var index = 0
 
         while(remainingData > 0){
             val canRead = minOf(remainingData, (getCurrentEndIndex() - 4 - index()).toInt())
@@ -48,6 +49,7 @@ public abstract class GenericLeafReader
                 data[index + i] = newData[i]
             }
 
+            index += canRead
             remainingData -= canRead
             if(index() == getCurrentEndIndex() - 4){
                 val integerBytes = readRaw(4)?: return null
@@ -60,6 +62,7 @@ public abstract class GenericLeafReader
     }
 
     override fun advance(by: Long) {
+        blockIndex = ((index() - headerSize) / blockSize).toInt()
         var remainingData = by
 
         while(remainingData > 0){
