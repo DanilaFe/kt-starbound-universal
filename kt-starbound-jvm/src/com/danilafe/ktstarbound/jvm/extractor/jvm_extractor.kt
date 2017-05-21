@@ -4,6 +4,10 @@ import com.danilafe.ktstarbound.extractor.GenericExtractor
 import com.danilafe.ktstarbound.readers.GenericReader
 import java.nio.ByteBuffer
 
+/**
+ * An extractor that specifically uses JVM-specific classes and such
+ * to extract data from its readers.
+ */
 public class JvmExtractor<T : GenericReader>(reader: T) : GenericExtractor<T>(reader){
 
     override fun readByte(): Byte? {

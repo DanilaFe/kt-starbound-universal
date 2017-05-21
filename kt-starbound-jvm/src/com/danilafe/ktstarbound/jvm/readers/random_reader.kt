@@ -4,8 +4,14 @@ import com.danilafe.ktstarbound.readers.GenericReader
 import java.io.File
 import java.io.RandomAccessFile
 
+/**
+ * A normal reader powered by the RandomAccessFile class.
+ */
 public class RandomReader(file: File, index: Long) : GenericReader() {
 
+    /**
+     * The random access file responsible for reading data and such.
+     */
     private val fileReader = RandomAccessFile(file, "r")
 
     init {

@@ -5,9 +5,15 @@ import com.danilafe.ktstarbound.readers.GenericLeafReader
 import java.io.File
 import java.io.RandomAccessFile
 
+/**
+ * A leaf reader backed by the RandomAccessFile class.
+ */
 public class RandomLeafReader(file: File, index: Long, headerSize: Long, blockSize: Long, prefixSize: Long)
     : GenericLeafReader(::readRawInt, headerSize, blockSize, prefixSize){
 
+    /**
+     * The file reader that handles the reading operations.
+     */
     private val fileReader = RandomAccessFile(file, "r")
 
     init {

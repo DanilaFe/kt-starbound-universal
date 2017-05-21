@@ -8,18 +8,36 @@ import com.danilafe.ktstarbound.readers.GenericLeafReader
 import com.danilafe.ktstarbound.readers.GenericReader
 import com.danilafe.ktstarbound.readers.impl.ArrayReader
 
+/**
+ * A wrapper around Starbound's .world file type.
+ * Takes two extra functions that can't be implemented in pure Kotlin -
+ * decompressFunction, which decompresses ZLIB-compressed data,
+ * and createExtractorFunction, which creates a platform-specific extractor
+ * from the pure Kotlin ArrayReader
+ */
 public class World(val decompressionFunction: (ByteArray) -> ByteArray,
                    val createExtractorFunction: (ArrayReader) -> GenericExtractor<GenericReader>,
                    startExtractor: GenericExtractor<GenericReader>) {
 
+    /**
+     * The Metadata wrapper class. This holds not only pre-extracted information, but also
+     * a full VersionedData that contains all of the world metadata.
+     */
     public data class Metadata(val width: Int, val height: Int,
                                val playerStart: Pair<Double, Double>,
                                val respawnInWorld: Boolean, val spawningEnabled: Boolean, val adjustPlayerStart: Boolean,
                                val dungeonMap: Map<Long, String>, val protectedDungeons: List<Long>,
                                val fullData: VersionedData)
 
+    /**
+     * The BTreeDB5 that backs the world file.
+     */
     public val btree = BTreeDB5(startExtractor)
 
+    /**
+     * Converts the world parameters to a byte array key
+     * for use in the BTreeDB
+     */
     public fun dataToKey(layer: Byte, x: Short, y: Short): ByteArray {
         val newKey = ByteArray(5)
         newKey[0] = layer
@@ -30,12 +48,18 @@ public class World(val decompressionFunction: (ByteArray) -> ByteArray,
         return newKey
     }
 
+    /**
+     * Gets the data at the given parameters.
+     */
     public fun get(layer: Byte, x: Short, y: Short, extractor: GenericExtractor<GenericReader>, leafExtractor: GenericExtractor<GenericLeafReader>): ByteArray? {
         val key = dataToKey(layer, x, y)
         val data = btree.getData(key, extractor, leafExtractor)?: return null
         return decompressionFunction(data)
     }
 
+    /**
+     * Extracts the world's metadata.
+     */
     public fun getMetadata(extractor: GenericExtractor<GenericReader>, leafExtractor: GenericExtractor<GenericLeafReader>): Metadata? {
         val data = get(0, 0, 0, extractor, leafExtractor)?: return null
         val arrayExtractor = createExtractorFunction(ArrayReader(data, 0))
