@@ -53,7 +53,7 @@ public class World(val decompressionFunction: (ByteArray) -> ByteArray,
      */
     public fun get(layer: Byte, x: Short, y: Short, extractor: GenericExtractor<GenericReader>, leafExtractor: GenericExtractor<GenericLeafReader>): ByteArray? {
         val key = dataToKey(layer, x, y)
-        val data = btree.getData(key, extractor, leafExtractor)?: return null
+        val data = btree.get(key, extractor, leafExtractor)?: return null
         return decompressionFunction(data)
     }
 

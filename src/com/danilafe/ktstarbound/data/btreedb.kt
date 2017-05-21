@@ -89,7 +89,7 @@ public class BTreeDB5(startExtractor: GenericExtractor<GenericReader>) {
     /**
      * Gets the data from the BTreeDB5 at the given key.
      */
-    public fun  getData(key: ByteArray, normalExtractor: GenericExtractor<GenericReader>, leafExtractor: GenericExtractor<GenericLeafReader>): ByteArray? {
+    public fun  get(key: ByteArray, normalExtractor: GenericExtractor<GenericReader>, leafExtractor: GenericExtractor<GenericLeafReader>): ByteArray? {
         /* Gets index of the root node to which the search should go first. */
         val firstKeyIndex = (if (swap) secondRootIndex else firstRootIndex) * blockSize + headerSize
         var nodeType: String
