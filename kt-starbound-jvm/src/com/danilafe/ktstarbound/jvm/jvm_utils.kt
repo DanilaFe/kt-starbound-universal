@@ -1,4 +1,4 @@
-package com.danilafe.ktstarbound.jvm.readers
+package com.danilafe.ktstarbound.jvm
 
 import java.nio.ByteBuffer
 

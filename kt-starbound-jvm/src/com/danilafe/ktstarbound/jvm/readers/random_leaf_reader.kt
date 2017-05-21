@@ -1,5 +1,6 @@
 package com.danilafe.ktstarbound.jvm.readers
 
+import com.danilafe.ktstarbound.jvm.readRawInt
 import com.danilafe.ktstarbound.readers.GenericLeafReader
 import java.io.File
 import java.io.RandomAccessFile

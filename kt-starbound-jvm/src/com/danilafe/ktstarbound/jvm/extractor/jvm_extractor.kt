@@ -1,4 +1,4 @@
-package com.danilafe.ktstarbound.jvm.readers
+package com.danilafe.ktstarbound.jvm.extractor
 
 import com.danilafe.ktstarbound.extractor.GenericExtractor
 import com.danilafe.ktstarbound.readers.GenericReader
