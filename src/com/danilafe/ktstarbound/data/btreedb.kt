@@ -122,7 +122,7 @@ public class BTreeDB5(startExtractor: GenericExtractor<GenericReader>) {
 
                     /* Move the low or high to the middle,
                        to narrow the width of the search. */
-                    if(comparisonResult > 0){
+                    if(comparisonResult < 0){
                         high = med
                     } else {
                         low = med + 1

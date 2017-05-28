@@ -10,7 +10,7 @@ public fun compareByteArrays(a: ByteArray, b: ByteArray): Int {
 
     return (0..a.size - 1)
             .firstOrNull { a[it] != b[it] }
-            ?.let { (a[it].toInt() and 0xFF) - (b[it].toInt() - 0xFF) }
+            ?.let { (a[it].toInt() and 0xff) - (b[it].toInt() and 0xff) }
             ?: 0
 }
 
