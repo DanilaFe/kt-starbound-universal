@@ -30,6 +30,11 @@ public class JvmExtractor<T : GenericReader>(reader: T) : GenericExtractor<T>(re
         return ByteBuffer.wrap(bytes).double
     }
 
+    override fun readShort(): Short? {
+        val bytes = reader.read(2)?: return null
+        return ByteBuffer.wrap(bytes).short
+    }
+
     override fun readInt(): Int? {
         val bytes = reader.read(4)?: return null
         return ByteBuffer.wrap(bytes).int
