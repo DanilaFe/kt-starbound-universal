@@ -31,6 +31,11 @@ public abstract class GenericExtractor<T : GenericReader>(public var reader: T) 
     public abstract fun readDouble(): Double?
 
     /**
+     * Reads a short from the reader.
+     */
+    public abstract fun readShort(): Short?
+
+    /**
      * Reads an integer from the reader.
      */
     public abstract fun readInt(): Int?
