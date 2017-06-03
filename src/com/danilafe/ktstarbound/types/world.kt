@@ -1,6 +1,7 @@
 package com.danilafe.ktstarbound.types
 
 import com.danilafe.ktstarbound.data.BTreeDB5
+import com.danilafe.ktstarbound.data.internal.Chunk
 import com.danilafe.ktstarbound.data.internal.VersionedData
 import com.danilafe.ktstarbound.dynamic.*
 import com.danilafe.ktstarbound.extractor.GenericExtractor
@@ -55,6 +56,14 @@ public class World(val decompressionFunction: (ByteArray) -> ByteArray,
         val key = dataToKey(layer, x, y)
         val data = btree.get(key, extractor, leafExtractor)?: return null
         return decompressionFunction(data)
+    }
+
+    /**
+     * Reads a single chunk from the given X and Y coordinates.
+     */
+    public fun getChunk(x: Short, y: Short, extractor: GenericExtractor<GenericReader>, leafExtractor: GenericExtractor<GenericLeafReader>): Chunk? {
+        val data = get(1.toByte(), x, y, extractor, leafExtractor) ?: return null
+        return Chunk(createExtractorFunction(ArrayReader(data, 0)))
     }
 
     /**
