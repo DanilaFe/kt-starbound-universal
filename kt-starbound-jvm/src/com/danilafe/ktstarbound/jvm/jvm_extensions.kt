@@ -2,6 +2,7 @@
 package com.danilafe.ktstarbound.jvm
 
 import com.danilafe.ktstarbound.data.BTreeDB5
+import com.danilafe.ktstarbound.data.internal.Chunk
 import com.danilafe.ktstarbound.types.World
 import java.io.File
 
@@ -20,6 +21,16 @@ public fun World.get(layer: Byte, x: Short, y: Short, file: File): ByteArray? {
 }
 public fun World.get(layer: Byte, x: Short, y: Short, file: String): ByteArray? {
     return get(layer, x, y, File(file))
+}
+public fun World.getChunk(x: Short, y: Short, file: File): Chunk? {
+    val normalReader = createExtractor(file)
+    val leafReader = createLeafExtractor(file, btree.headerSize.toLong(), btree.blockSize.toLong(), btree.prefixSize.toLong())
+    return getChunk(x, y, normalReader, leafReader)
+}
+public fun World.getChunk(x: Short, y: Short, file: String): Chunk? {
+    val normalReader = createExtractor(file)
+    val leafReader = createLeafExtractor(file, btree.headerSize.toLong(), btree.blockSize.toLong(), btree.prefixSize.toLong())
+    return getChunk(x, y, normalReader, leafReader)
 }
 public fun World.getMetadata(file: File): World.Metadata? {
     val normalReader = createExtractor(file)
