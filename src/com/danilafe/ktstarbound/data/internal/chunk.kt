@@ -16,7 +16,10 @@ public class Chunk(extractor: GenericExtractor<GenericReader>){
     /**
      * The length of the tile data.
      */
-    public val tileDataLength = extractor.readByte()!!.toInt() - 2
+    public val tileDataLength = when(extractor.readByte()!!.toInt()){
+        0x21, 22 -> 31
+        else -> 30
+    }
     /**
      * The tile data itself.
      */
