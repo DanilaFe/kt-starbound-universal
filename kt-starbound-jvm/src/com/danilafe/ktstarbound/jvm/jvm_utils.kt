@@ -31,7 +31,7 @@ fun decompress(array: ByteArray): ByteArray {
     inflater.setInput(array)
     while(!inflater.finished()){
         val readBytes = inflater.inflate(buffer)
-        outputStream.write(buffer)
+        outputStream.write(buffer, 0, readBytes)
     }
     return outputStream.toByteArray()
 }
