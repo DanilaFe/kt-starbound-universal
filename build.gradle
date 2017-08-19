@@ -10,7 +10,7 @@ buildscript {
     }
 }
 
-allprojects {
+subprojects {
   apply plugin: 'kotlin'
 
   repositories {
