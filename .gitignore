@@ -164,3 +164,11 @@ $RECYCLE.BIN/
 *.lnk
 
 # End of https://www.gitignore.io/api/osx,git,java,macos,linux,windows,intellij
+
+# Gradle Build files
+**/build/**
+**/.gradle/*
+
+# IntelliJ
+**/.idea/*
+*.iml
