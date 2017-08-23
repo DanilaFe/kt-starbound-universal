@@ -27,7 +27,7 @@ public class World(val decompressionFunction: (ByteArray) -> ByteArray,
     public data class Metadata(val width: Int, val height: Int,
                                val playerStart: Pair<Double, Double>,
                                val respawnInWorld: Boolean, val spawningEnabled: Boolean, val adjustPlayerStart: Boolean,
-                               val dungeonMap: Map<Long, String>, val protectedDungeons: List<Long>,
+                               val protectedDungeons: List<Long>,
                                val fullData: VersionedData)
 
     /**
@@ -85,23 +85,13 @@ public class World(val decompressionFunction: (ByteArray) -> ByteArray,
         val spawningEnabled = (worldDataMap["spawningEnabled"] as? DynamicBoolean ?: return null).data
         val adjustPlayerStart = (worldDataMap["adjustPlayerStart"] as? DynamicBoolean ?: return null).data
 
-        val dungeonIds = mutableMapOf<Long, String>()
-        val dungeonIdMap = (worldDataMap["dungeonIdMap"] as? DynamicList ?: return null).data
-        for(list in dungeonIdMap){
-            val dungeon = (list as? DynamicList ?: return null).data
-            val key = (dungeon[0] as? DynamicVariableInteger ?: return null).data
-            val value = (dungeon[1] as? DynamicString ?: return null).data
-            dungeonIds.put(key, value)
-        }
-
         val protectedDungeons = mutableListOf<Long>()
         val protectedDungeonIds = (worldDataMap["protectedDungeonIds"] as? DynamicList ?: return null).data
         protectedDungeonIds.mapTo(protectedDungeons) { (it as? DynamicVariableInteger ?: return null).data }
 
         return Metadata(width, height,
                 playerStartPair,
-                respawnInWorld, spawningEnabled, adjustPlayerStart,
-                dungeonIds, protectedDungeons,
+                respawnInWorld, spawningEnabled, adjustPlayerStart, protectedDungeons,
                 versionedData)
     }
 
